@@ -1,0 +1,22 @@
+body {
+  background: rgb(200, 198, 232);
+    background: linear-gradient(90deg, rgba(200, 198, 232, 1) 0%, rgba(255, 250, 215, 1) 62%, rgba(200, 203, 204, 1) 100%);
+  padding-top: 100px;
+}
+.form-control-primary {
+  margin: 10px;
+  padding: 20px;
+  opacity: 0.2;
+  border-radius: 2px;
+}
+.content {
+  padding-top: 70px;
+  padding-bottom: 40px;
+}
+.table {
+  width: 50%;
+  margin: auto;
+}
+thead {    
+  background-color: rgba(0, 0, 0, 0.288);
+  }
