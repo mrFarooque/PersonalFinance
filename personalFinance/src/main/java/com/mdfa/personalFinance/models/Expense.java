@@ -4,8 +4,9 @@ import com.mdfa.personalFinance.enums.Category;
 import lombok.*;
 
 import javax.persistence.*;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Data
 @Entity
@@ -17,7 +18,7 @@ public class Expense {
     private int id;
     private String purpose;
     private int amount;
-    private LocalDateTime date;
+    private LocalDate date;
     @Enumerated
     private Category category;
 

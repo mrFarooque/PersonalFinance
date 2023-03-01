@@ -9,6 +9,7 @@ import com.mdfa.personalFinance.service.AnalyticsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -17,6 +18,7 @@ public class AnalyticsServiceImpl implements AnalyticsService {
 
     @Autowired IncomeRepo incomeRepo;
     @Autowired ExpenseRepo expenseRepo;
+
     @Override
     public int totalIncome() {
         List<Income> incomes = incomeRepo.findAll();
@@ -33,4 +35,10 @@ public class AnalyticsServiceImpl implements AnalyticsService {
                 .forEach(expense -> total.addAndGet(expense.getAmount()));
         return total.get();
     }
+
+    @Override
+    public List<Expense> listExpenseByMonth(int month) {
+        return expenseRepo.findAllByMonth(month);
+    }
+
 }
