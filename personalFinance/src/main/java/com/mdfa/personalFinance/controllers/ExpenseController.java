@@ -2,7 +2,6 @@ package com.mdfa.personalFinance.controllers;
 
 import com.mdfa.personalFinance.enums.Category;
 import com.mdfa.personalFinance.models.Expense;
-import com.mdfa.personalFinance.service.AnalyticsService;
 import com.mdfa.personalFinance.service.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +15,6 @@ import java.util.List;
 @RequestMapping("/expense")
 public class ExpenseController {
     @Autowired ExpenseService expenseService;
-    @Autowired AnalyticsService analyticsService;
 
     @PostMapping("/")
     public ResponseEntity<Expense> newExpense(@RequestBody Expense expense) {
@@ -24,10 +22,21 @@ public class ExpenseController {
         return new ResponseEntity<>(expense, HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/")
+    @GetMapping("/list")
     public ResponseEntity<List<Expense>> listAllExpense() {
         List<Expense> expenses = expenseService.listAllExpense();
         return new ResponseEntity<>(expenses, HttpStatus.OK);
+    }
+
+    @GetMapping("/list/{month}")
+    public ResponseEntity<List<Expense>> listByMonth(@PathVariable(value = "month") int month) {
+        return new ResponseEntity<>(expenseService.listExpenseByMonth(month), HttpStatus.OK);
+    }
+
+    @GetMapping("/list/current")
+    public ResponseEntity<List<Expense>> listByCurrentMonth() {
+        int month = LocalDate.now().getMonth().getValue();
+        return new ResponseEntity<>(expenseService.listExpenseByMonth(month), HttpStatus.OK);
     }
 
     @GetMapping("/total")
@@ -35,14 +44,14 @@ public class ExpenseController {
         return new ResponseEntity<>(expenseService.totalExpense(), HttpStatus.OK);
     }
 
-    @GetMapping("/total/{category}")
+    @GetMapping("/total/category/{category}")
     public ResponseEntity<Integer> totalByCategory(@PathVariable(value = "category") Category category) {
-        return new ResponseEntity<>(analyticsService.totalExpenseByCategory(category), HttpStatus.OK);
+        return new ResponseEntity<>(expenseService.totalExpenseByCategory(category), HttpStatus.OK);
     }
 
-    @GetMapping("/list/{month}")
-    public ResponseEntity<List<Expense>> listByMonth(@PathVariable(value = "month") int month) {
-        return new ResponseEntity<>(analyticsService.listExpenseByMonth(month), HttpStatus.OK);
+    @GetMapping("/total/month/{month}")
+    public ResponseEntity<Integer> totalByMonth(@PathVariable(value = "month") int month) {
+        return new ResponseEntity<>(expenseService.totalExpenseByMonth(month), HttpStatus.OK);
     }
 
 }

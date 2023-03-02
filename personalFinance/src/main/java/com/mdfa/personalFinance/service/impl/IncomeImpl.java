@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 public class IncomeImpl implements IncomeService {
@@ -17,4 +19,13 @@ public class IncomeImpl implements IncomeService {
         income.setDate(LocalDateTime.now());
         return incomeRepo.save(income);
     }
+
+    @Override
+    public int totalIncome() {
+        List<Income> incomes = incomeRepo.findAll();
+        AtomicInteger total = new AtomicInteger();
+        incomes.forEach(income -> total.addAndGet(income.getAmount()));
+        return total.get();
+    }
+
 }
