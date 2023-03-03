@@ -19,7 +19,6 @@ public class Expense {
     private String purpose;
     private int amount;
     private LocalDate date;
-    @Enumerated
     private Category category;
 
 }

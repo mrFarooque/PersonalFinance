@@ -20,7 +20,6 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     public Expense newExpense(Expense expense) {
-        expense.setDate(LocalDate.now());
         return expenseRepo.save(expense);
     }
 
@@ -41,6 +40,16 @@ public class ExpenseServiceImpl implements ExpenseService {
         List<Expense> expenses = expenseRepo.findAll();
         AtomicInteger total = new AtomicInteger();
         expenses.stream().filter(expense -> expense.getCategory().equals(category))
+                .forEach(expense -> total.addAndGet(expense.getAmount()));
+        return total.get();
+    }
+
+    @Override
+    public int totalExpenseByCategoryAndMonth(Category category, int month) {
+        List<Expense> expenses = expenseRepo.findAllByMonth(month);
+        AtomicInteger total = new AtomicInteger();
+        expenses.stream()
+                .filter(expense -> expense.getCategory().equals(category))
                 .forEach(expense -> total.addAndGet(expense.getAmount()));
         return total.get();
     }

@@ -1,22 +1,87 @@
+/* .row {
+  border: 1px solid red;
+}
+.col {
+  border: 1px solid black;
+} */
 body {
-  background: rgb(200, 198, 232);
-    background: linear-gradient(90deg, rgba(200, 198, 232, 1) 0%, rgba(255, 250, 215, 1) 62%, rgba(200, 203, 204, 1) 100%);
-  padding-top: 100px;
+  /* border: 1px solid black; */
+  font-family: 'Tilt Neon', cursive;
 }
-.form-control-primary {
-  margin: 10px;
-  padding: 20px;
-  opacity: 0.2;
-  border-radius: 2px;
+.navbar {
+  padding-left: 20px;
+  background: rgb(227, 227, 227);
+  background: linear-gradient(274deg, rgba(227, 227, 227, 1) 0%, rgba(235, 235, 235, 1) 42%, rgba(183, 227, 241, 1) 100%);
 }
-.content {
-  padding-top: 70px;
-  padding-bottom: 40px;
+p {
+  font-size: 18px;
 }
-.table {
-  width: 50%;
+.balance {
+  margin-top: 1.8%;
+  margin-bottom: 1.8%;
+}
+.balance > p{
+  background-color: #609966;
+  color: white;
+  display: inline;
+  padding: 1%;
+}
+form p {
+  text-align: center;
+}
+form .row {
+      width: 99%;
+        margin: auto;
+}
+form div {
+  margin-bottom: 2%;
+}
+.category-text {
+  padding: 0;
+}
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2%;
+  margin-bottom: 0;
+}
+.buttons button {
+  width: 47%;
+}
+#btn-cash {
+  background-color: #609966;
+  border: 0;
+}
+#btn-expense {
+  background-color: #ae0000;
+  border: 0;
+}
+#category {
+  margin-bottom: 1%;
+}
+#category div {
+  display: flex;
+  justify-content: center;
+  padding-top: 1%;
+  border-radius: 10px;
+  width: 15%;
   margin: auto;
 }
-thead {    
-  background-color: rgba(0, 0, 0, 0.288);
-  }
+.food {
+  background-color: #C7E8CA;
+}
+.utilities {
+  background-color: #F6E1C3;
+}
+.rent {
+  background-color: #ECF2FF;
+}
+.debt {
+  background-color: #E3DFFD;
+}
+.gifts {
+  background-color: #93BFCF;
+}
+.entertainment {
+  background-color: #EAC7C7;
+}

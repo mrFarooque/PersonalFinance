@@ -10,6 +10,7 @@ public interface ExpenseService {
     int totalExpense();
     List<Expense> listAllExpense();
     int totalExpenseByCategory(Category category);
+    int totalExpenseByCategoryAndMonth(Category category, int month);
     int totalExpenseByMonth(int month);
     List<Expense> listExpenseByMonth(int month);
 }

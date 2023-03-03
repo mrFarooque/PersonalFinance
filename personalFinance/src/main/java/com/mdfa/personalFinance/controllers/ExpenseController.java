@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/expense")
 public class ExpenseController {
@@ -18,8 +19,7 @@ public class ExpenseController {
 
     @PostMapping("/")
     public ResponseEntity<Expense> newExpense(@RequestBody Expense expense) {
-        expenseService.newExpense(expense);
-        return new ResponseEntity<>(expense, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(expenseService.newExpense(expense), HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/list")
@@ -49,8 +49,26 @@ public class ExpenseController {
         return new ResponseEntity<>(expenseService.totalExpenseByCategory(category), HttpStatus.OK);
     }
 
+    @GetMapping("/total/category/{category}/month/{month}")
+    public ResponseEntity<Integer> totalByCategoryAndMonth(@PathVariable(value = "category") Category category,
+                                                           @PathVariable(value = "month") int month) {
+        return new ResponseEntity<>(expenseService.totalExpenseByCategoryAndMonth(category, month), HttpStatus.OK);
+    }
+
+    @GetMapping("/total/category/{category}/month/current")
+    public ResponseEntity<Integer> totalByCategoryAndMonth(@PathVariable(value = "category") Category category) {
+        int month = LocalDate.now().getMonth().getValue();
+        return new ResponseEntity<>(expenseService.totalExpenseByCategoryAndMonth(category, month), HttpStatus.OK);
+    }
+
     @GetMapping("/total/month/{month}")
     public ResponseEntity<Integer> totalByMonth(@PathVariable(value = "month") int month) {
+        return new ResponseEntity<>(expenseService.totalExpenseByMonth(month), HttpStatus.OK);
+    }
+
+    @GetMapping("/total/month/current")
+    public ResponseEntity<Integer> totalByCurrentMonth() {
+        int month = LocalDate.now().getMonth().getValue();
         return new ResponseEntity<>(expenseService.totalExpenseByMonth(month), HttpStatus.OK);
     }
 
