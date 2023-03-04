@@ -16,18 +16,31 @@ body {
 p {
   font-size: 18px;
 }
+select {
+    border: 0;
+    background-color: white;
+    outline: none;
+    text-align: center;
+}
 .balance {
   margin-top: 1.8%;
   margin-bottom: 1.8%;
 }
 .balance > p{
   background-color: #609966;
+  border-radius: 10px;
   color: white;
   display: inline;
   padding: 1%;
 }
 form p {
   text-align: center;
+  background-color: #BAD7E9;
+  width: 50%;
+  margin: auto;
+  margin-top: 3%;
+  padding: 2%;
+  border-radius: 10px;
 }
 form .row {
       width: 99%;
@@ -35,6 +48,28 @@ form .row {
 }
 form div {
   margin-bottom: 2%;
+}
+.hide-form {
+  transform: translateX(500px);
+}
+#toggle, #data-chart{
+    transition-duration: 0.8s;
+}
+.middle {
+  transform: translateX(14%);
+}
+#toggle-btn {
+  background-color: #144272;
+  color: white;
+  border: 0;
+  border-radius: 10px;
+  padding: 0.5%;
+  padding-left: 1.5%;
+  padding-right: 1.5%;
+  margin-right: 2%;
+}
+#toggle-btn:hover{
+  background-color: #0A2647;
 }
 .category-text {
   padding: 0;

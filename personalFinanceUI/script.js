@@ -68,11 +68,15 @@ function updateTable(res) {
         let td3 = document.createElement("td");
         let td4 = document.createElement("td");
         let td5 = document.createElement("td");
+        let td6 = document.createElement("td");
+        // let delete = document.createElement("button");
+        // let edit = document.createElement("button");
         td1.innerText = index+1;
         td2.innerText = ele.purpose;
         td3.innerText = ele.amount;
         td4.innerText = ele.category;
         td5.innerText = ele.date;
+        // td6.append(delete, edit);
         tr.append(td1, td2, td3, td4, td5);
         tbody.append(tr);
     });
@@ -107,3 +111,12 @@ function getFormData() {
     form.reset();
     return obj;
 }
+
+// Add-Expense/Cash button to hide or unhide form
+let toggleBtn = document.getElementById("toggle-btn");
+toggleBtn.addEventListener("click", () => {
+    let toggleDiv = document.getElementById("toggle")
+    toggleDiv.classList.toggle("hide-form")
+    let dataChart = document.getElementById("data-chart")
+    dataChart.classList.toggle("middle")
+})

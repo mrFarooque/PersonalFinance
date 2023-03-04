@@ -23,10 +23,11 @@
   <body>
     <nav class="navbar navbar-light">
       <span class="navbar-brand mb-0 h1">Personal Finance</span>
+      <button id="toggle-btn">Add</button>
     </nav>
     <div class="container-fluid">
       <div class="row">
-        <div class="col col-9">
+        <div id="data-chart" class="col col-9 middle">
           <div class="row">
             <div class="col balance">
               <p>Balance: ₹ <span id="balance-data">0</span></p>
@@ -96,12 +97,13 @@
                 <th scope="col">Amount</th>
                 <th scope="col">Category</th>
                 <th scope="col">Date</th>
+                <th scope="col">Actions</th>
               </tr>
             </thead>
             <tbody></tbody>
           </table>
         </div>
-        <div class="col col-3">
+        <div id="toggle" class="col col-3 hide-form">
           <form>
             <p>Add Expense/Cash</p>
             <div class="form-group">
