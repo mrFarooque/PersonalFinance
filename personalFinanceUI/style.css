@@ -22,16 +22,25 @@ select {
     outline: none;
     text-align: center;
 }
+select:hover, input:hover{
+  cursor: pointer;
+}
+button i {
+  margin-left: 8px;
+}
 .balance {
   margin-top: 1.8%;
   margin-bottom: 1.8%;
 }
 .balance > p{
   background-color: #609966;
+  box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
   border-radius: 10px;
   color: white;
   display: inline;
   padding: 1%;
+  padding-right: 3%;
+  padding-left: 3%;
 }
 form p {
   text-align: center;
@@ -51,6 +60,9 @@ form div {
 }
 .hide-form {
   transform: translateX(500px);
+}
+#data-chart > p {
+  margin-bottom: 2%;
 }
 #toggle, #data-chart{
     transition-duration: 0.8s;
@@ -91,8 +103,26 @@ form div {
   background-color: #ae0000;
   border: 0;
 }
+thead {
+  background-color: #ececec;
+}
+table {
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+table button {
+  border: none;
+  background-color: white;
+  margin-right: 5%;
+}
+table button:first-child:hover{
+  color: #ae0000;
+}
+table button:nth-child(2):hover{
+  color: #ffb803;
+}
+
 #category {
-  margin-bottom: 1%;
+  margin-bottom: 2%;
 }
 #category div {
   display: flex;
@@ -104,19 +134,38 @@ form div {
 }
 .food {
   background-color: #C7E8CA;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
 .utilities {
   background-color: #F6E1C3;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
 .rent {
   background-color: #ECF2FF;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
 .debt {
   background-color: #E3DFFD;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
 .gifts {
   background-color: #93BFCF;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
 .entertainment {
   background-color: #EAC7C7;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+.income-color {
+  background-color: #ddf1df;
+}
+.expense-color {
+  background-color: rgb(250, 221, 221);
+}
+#filter-btn {
+  border: none;
+  border-radius: 10px;
+  padding-left: 2%;
+  padding-right: 2%;
+  margin-left: 1%;
 }
