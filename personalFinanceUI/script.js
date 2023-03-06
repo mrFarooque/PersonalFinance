@@ -1,29 +1,37 @@
 // API CALLS start
 // GET: list all expense of current month
 async function listExpenseCurrentMonth() {
-    let response = await fetch("http://localhost:8888/expense/list/current").then(res => res.json())
-    updateTable(response)
+    let response = await fetch("http://localhost:8888/finance/list").then(res => res.json())
+    updateTable(response, "current")
 }
 listExpenseCurrentMonth();
+
+// alternate of listExpenseCurrentMonth() is showAllData()
+async function showAllData(type, month) {
+    let response = await fetch("http://localhost:8888/finance/list/"+type+"/"+month).then(res => res.json())
+    console.log(response)
+    updateTable(response, month)
+}
 
 // POST: expense or cash
  async function addMoney(value) {
     let request = getFormData();
-    console.log(request)
-    console.log(value)
     if(value == 0) {
-        let response = await fetch("http://localhost:8888/expense/", {
+        request.type = "EXPENSE"
+        let response = await fetch("http://localhost:8888/finance/", {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-type': 'application/json'
             },
             body: JSON.stringify(request)
-            }
+        }
         )
         listExpenseCurrentMonth()
     } else {
-        let response = await fetch("http://localhost:8888/income/", {
+        request.type = "INCOME"
+        request.category = "SALARY"
+        let response = await fetch("http://localhost:8888/finance/", {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -36,11 +44,11 @@ listExpenseCurrentMonth();
     }
  }
  // call all GET Api to fill data
- async function fillData() {
+ async function fillData(month) {
     let categories = ["FOOD", "UTILITIES", "RENT", "DEBT", "ENTERTAINMENT", "GIFTS"]
     categories.forEach(category => {
         async function getData() {
-            let response = await fetch("http://localhost:8888/expense/total/category/"+category+"/month/current").then(res => res.json())
+            let response = await fetch("http://localhost:8888/finance/total/EXPENSE/"+category+"/"+month).then(res => res.json())
             console.log("category:"+ category +" res-> " + response)
             if(category == "FOOD") document.getElementById("food-data").innerText = response;
             else if(category == "UTILITIES") document.getElementById("utilities-data").innerText = response;
@@ -51,14 +59,16 @@ listExpenseCurrentMonth();
         }
         getData();
     })
-    let balance = await fetch("http://localhost:8888/income/balance/month/current").then(res => res.json())
+    let balance = await fetch("http://localhost:8888/finance/balance/current").then(res => res.json())
     document.getElementById("balance-data").innerText = balance
  }
- fillData();
-// API CALLS end
+ async function deletExpenseById(id) {  
+    fetch("http://localhost:8888/finance/"+id, {method: 'DELETE'})
+ }
+// all API CALLS ends 
 // DOM to list all expense 
-function updateTable(res) {
-    fillData();
+function updateTable(res, month) {
+    fillData(month);
     let tbody = document.querySelector("tbody")
     tbody.innerHTML = ''
     res.forEach((ele,index) => {
@@ -69,16 +79,38 @@ function updateTable(res) {
         let td4 = document.createElement("td");
         let td5 = document.createElement("td");
         let td6 = document.createElement("td");
-        // let delete = document.createElement("button");
-        // let edit = document.createElement("button");
+        let del = document.createElement("button");
+        let edit = document.createElement("button");
         td1.innerText = index+1;
         td2.innerText = ele.purpose;
         td3.innerText = ele.amount;
         td4.innerText = ele.category;
         td5.innerText = ele.date;
-        // td6.append(delete, edit);
-        tr.append(td1, td2, td3, td4, td5);
+        del.innerHTML = '<i class="fa-solid fa-trash"></i>'
+        edit.innerHTML = '<i class="fa-solid fa-pen-nib"></i>'
+        td6.append(del, edit);
+        tr.append(td1, td2, td3, td4, td5, td6);
         tbody.append(tr);
+        
+        // if income/expense bgcolor changes
+        if(ele.type == "EXPENSE") {
+            tr.classList.add("expense-color")
+            del.classList.add("expense-color")
+            edit.classList.add("expense-color")
+        }
+        else {
+            tr.classList.add("income-color")
+            del.classList.add("income-color")
+            edit.classList.add("income-color")
+        }
+        // add functionality to these buttons
+        del.addEventListener("click", () => {
+            deletExpenseById(ele.id)
+            location.reload()
+        })
+        edit.addEventListener("click", () => {
+            console.log("edit")
+        })
     });
 }
 
@@ -112,11 +144,28 @@ function getFormData() {
     return obj;
 }
 
-// Add-Expense/Cash button to hide or unhide form
+// Add button to hide or unhide form
 let toggleBtn = document.getElementById("toggle-btn");
+toggleBtn.innerHTML = 'Add <i class="fa-solid fa-bars"></i>'
+let bar = document.getElementsByName("button i");
+let count = 0;
 toggleBtn.addEventListener("click", () => {
+    count++;
+    console.log(count)
     let toggleDiv = document.getElementById("toggle")
     toggleDiv.classList.toggle("hide-form")
     let dataChart = document.getElementById("data-chart")
     dataChart.classList.toggle("middle")
+    if(count % 2 == 1) {
+        toggleBtn.innerHTML = 'Add <i class="fa-solid fa-xmark"></i>'
+    } else {
+        toggleBtn.innerHTML = 'Add <i class="fa-solid fa-bars"></i>'
+    }
+})
+// filter data 
+filterBtn = document.getElementById("filter-btn")
+filterBtn.addEventListener("click", () => {
+    let type = document.getElementById("which-table").value
+    let month = document.getElementById("month").value
+    showAllData(type,month)
 })

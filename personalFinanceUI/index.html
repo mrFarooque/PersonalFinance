@@ -22,8 +22,8 @@
 
   <body>
     <nav class="navbar navbar-light">
-      <span class="navbar-brand mb-0 h1">Personal Finance</span>
-      <button id="toggle-btn">Add</button>
+      <span class="navbar-brand mb-0 h1">Financify</span>
+      <button id="toggle-btn"></button>
     </nav>
     <div class="container-fluid">
       <div class="row">
@@ -72,22 +72,28 @@
             </div>
           </div>
           <p>
-            Expense Table for
-            <select name="month" id="month">
-              <option selected>Current month</option>
-              <option value="jan">January</option>
-              <option value="jan">February</option>
-              <option value="jan">March</option>
-              <option value="jan">April</option>
-              <option value="jan">May</option>
-              <option value="jan">June</option>
-              <option value="jan">July</option>
-              <option value="jan">August</option>
-              <option value="jan">September</option>
-              <option value="jan">October</option>
-              <option value="jan">November</option>
-              <option value="jan">December</option>
+            <select name="which-table" id="which-table">
+              <option value="ALL" selected>Finance</option>
+              <option value="EXPENSE">Expense</option>
+              <option value="INCOME">Income</option>
             </select>
+             Table for
+            <select name="month" id="month">
+              <option value="current" selected>Current month</option>
+              <option value="01">January</option>
+              <option value="02">February</option>
+              <option value="03">March</option>
+              <option value="04">April</option>
+              <option value="05">May</option>
+              <option value="06">June</option>
+              <option value="07">July</option>
+              <option value="08">August</option>
+              <option value="09">September</option>
+              <option value="10">October</option>
+              <option value="11">November</option>
+              <option value="12">December</option>
+            </select>
+            <button id="filter-btn">Filter</button>
           </p>
           <table class="table">
             <thead class="thead-dark">
