@@ -1,4 +1,4 @@
-// API CALLS start
+// API CALLS starts here
 // GET: list all expense of current month
 async function listExpenseCurrentMonth() {
     let response = await fetch("http://localhost:8888/finance/list").then(res => res.json())
@@ -9,7 +9,6 @@ listExpenseCurrentMonth();
 // alternate of listExpenseCurrentMonth() is showAllData()
 async function showAllData(type, month) {
     let response = await fetch("http://localhost:8888/finance/list/"+type+"/"+month).then(res => res.json())
-    console.log(response)
     updateTable(response, month)
 }
 
@@ -59,13 +58,22 @@ async function showAllData(type, month) {
         }
         getData();
     })
-    let balance = await fetch("http://localhost:8888/finance/balance/current").then(res => res.json())
+    let balance = await fetch("http://localhost:8888/finance/balance/"+month).then(res => res.json())
     document.getElementById("balance-data").innerText = balance
+    let balanceTag = document.getElementById("balance-ptag")
+    if(balance < 0){
+        balanceTag.classList.remove("positive-balance-bgcolor")
+        balanceTag.classList.add("negative-balance-bgcolor")
+    }
+    else {
+        balanceTag.classList.remove("negative-balance-bgcolor")
+        balanceTag.classList.add("positive-balance-bgcolor")
+    }
  }
  async function deletExpenseById(id) {  
     fetch("http://localhost:8888/finance/"+id, {method: 'DELETE'})
  }
-// all API CALLS ends 
+// all API CALLS ends here
 // DOM to list all expense 
 function updateTable(res, month) {
     fillData(month);
@@ -167,5 +175,5 @@ filterBtn = document.getElementById("filter-btn")
 filterBtn.addEventListener("click", () => {
     let type = document.getElementById("which-table").value
     let month = document.getElementById("month").value
-    showAllData(type,month)
+    showAllData(type, month)
 })

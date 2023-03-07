@@ -5,12 +5,15 @@ import com.mdfa.personalFinance.enums.Type;
 import com.mdfa.personalFinance.models.Finance;
 import com.mdfa.personalFinance.service.FinanceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin
 @RestController
@@ -66,8 +69,7 @@ public class FinanceController {
 
     @GetMapping("/list/{type}/{month}")
     public ResponseEntity<List<Finance>> listAllFinanceByTypeAndMonth(@PathVariable("type") Type type, @PathVariable("month") int month) {
-        System.out.println("entered");
-        if (type.equals("ALL")) {
+        if (type.equals(Type.ALL)) {
             return new ResponseEntity<>(financeService.listAllByMonth(month), HttpStatus.OK);
         }
         return new ResponseEntity<>(financeService.listTypeByMonth(type, month), HttpStatus.OK);
@@ -76,6 +78,9 @@ public class FinanceController {
     @GetMapping("/list/{type}/current")
     public ResponseEntity<List<Finance>> listAllFinanceByTypeAndCurrentMonth(@PathVariable("type") Type type) {
         int month = LocalDate.now().getMonth().getValue();
+        if (type.equals(Type.ALL)) {
+            return new ResponseEntity<>(financeService.listAllByMonth(month), HttpStatus.OK);
+        }
         return new ResponseEntity<>(financeService.listTypeByMonth(type, month), HttpStatus.OK);
     }
 
