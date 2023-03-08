@@ -5,15 +5,12 @@ import com.mdfa.personalFinance.enums.Type;
 import com.mdfa.personalFinance.models.Finance;
 import com.mdfa.personalFinance.service.FinanceService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin
 @RestController
@@ -25,6 +22,11 @@ public class FinanceController {
     @PostMapping("/")
     public ResponseEntity<Finance> newFinance(@RequestBody Finance finance) {
         return new ResponseEntity<>(financeService.newFinance(finance), HttpStatus.ACCEPTED);
+    }
+
+    @PutMapping("/edit")
+    public ResponseEntity<Finance> editFinanceById(@RequestBody Finance finance) {
+        return new ResponseEntity<>(financeService.editFinanceById(finance), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

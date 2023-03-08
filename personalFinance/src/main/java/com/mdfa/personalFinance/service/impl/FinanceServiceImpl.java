@@ -23,6 +23,11 @@ public class FinanceServiceImpl implements FinanceService {
     }
 
     @Override
+    public Finance editFinanceById(Finance finance) {
+        return financeRepo.save(finance);
+    }
+
+    @Override
     public void deleteFinanceById(int id) {
         financeRepo.deleteById(id);
     }

@@ -30,7 +30,7 @@
         <div id="data-chart" class="col col-9 middle">
           <div class="row">
             <div class="col balance">
-              <p id="balance-ptag">Balance: ₹ <strong><span id="balance-data">0</span></strong></p>
+              <p id="balance-ptag" class="positive-balance-bgcolor">Balance: ₹ <strong><span id="balance-data">0</span></strong></p>
             </div>
           </div>
           <div id="category" class="row">
@@ -112,6 +112,12 @@
         <div id="toggle" class="col col-3 hide-form">
           <form>
             <p>Add Expense/Cash</p>
+            <input
+                type="hidden"
+                class="form-control"
+                id="id"
+                required
+              />
             <div class="form-group">
               <label for="Amount">Amount</label>
               <input

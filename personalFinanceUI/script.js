@@ -1,7 +1,7 @@
 // API CALLS starts here
 // GET: list all expense of current month
 async function listExpenseCurrentMonth() {
-    let response = await fetch("http://localhost:8888/finance/list").then(res => res.json())
+    let response = await fetch("http://localhost:8888/finance/list/current").then(res => res.json())
     updateTable(response, "current")
 }
 listExpenseCurrentMonth();
@@ -26,7 +26,6 @@ async function showAllData(type, month) {
             body: JSON.stringify(request)
         }
         )
-        listExpenseCurrentMonth()
     } else {
         request.type = "INCOME"
         request.category = "SALARY"
@@ -39,8 +38,8 @@ async function showAllData(type, month) {
             body: JSON.stringify(request)
             }
         )
-        listExpenseCurrentMonth()
     }
+    listExpenseCurrentMonth()
  }
  // call all GET Api to fill data
  async function fillData(month) {
@@ -111,13 +110,30 @@ function updateTable(res, month) {
             del.classList.add("income-color")
             edit.classList.add("income-color")
         }
-        // add functionality to these buttons
+        // delete and edit functionalities
         del.addEventListener("click", () => {
             deletExpenseById(ele.id)
             location.reload()
         })
         edit.addEventListener("click", () => {
-            console.log("edit")
+            // open form
+            let toggleDiv = document.getElementById("toggle")
+            // if form is close open and if already open then do not close
+            if(toggleDiv.classList.contains("hide-form")) toggleForm()
+            // clear form data
+            form.reset();
+            // enter form data
+            form.id.value = ele.id
+            form.amount.value = ele.amount
+            form.purpose.value = ele.purpose
+            form.date.value = ele.date
+            // check which category it belogns and tick that checkbox
+            if(ele.category == "FOOD") form.food.checked = true
+            if(ele.category == "UTILITIES") form.utilities.checked = true
+            if(ele.category == "RENT") form.rent.checked = true
+            if(ele.category == "DEBT") form.debt.checked = true
+            if(ele.category == "GIFTS") form.debt.checked = true
+            if(ele.category == "ENTERTAINMENT") form.entertainment.checked = true
         })
     });
 }
@@ -135,11 +151,13 @@ function getFormData() {
     let category = "ENTERTAINMENT";
     checkForCategory();
     let obj = {
+        id: form.id.value,
         amount: form.amount.value,
         purpose: form.purpose.value,
         date: form.date.value,
         category: category
     }
+    console.log(obj)
     function checkForCategory() {
         if (form.food.checked) category = 'FOOD';
         else if (form.utilities.checked) category = 'UTILITIES';
@@ -148,6 +166,7 @@ function getFormData() {
         else if (form.gifts.checked) category = 'GIFTS'; 
         else if (form.entertainment.checked) category = 'ENTERTAINMENT'; 
     }
+    form.id.value = 0
     form.reset();
     return obj;
 }
@@ -157,9 +176,9 @@ let toggleBtn = document.getElementById("toggle-btn");
 toggleBtn.innerHTML = 'Add <i class="fa-solid fa-bars"></i>'
 let bar = document.getElementsByName("button i");
 let count = 0;
-toggleBtn.addEventListener("click", () => {
+toggleBtn.addEventListener("click", toggleForm)
+function toggleForm() {
     count++;
-    console.log(count)
     let toggleDiv = document.getElementById("toggle")
     toggleDiv.classList.toggle("hide-form")
     let dataChart = document.getElementById("data-chart")
@@ -169,7 +188,7 @@ toggleBtn.addEventListener("click", () => {
     } else {
         toggleBtn.innerHTML = 'Add <i class="fa-solid fa-bars"></i>'
     }
-})
+}
 // filter data 
 filterBtn = document.getElementById("filter-btn")
 filterBtn.addEventListener("click", () => {

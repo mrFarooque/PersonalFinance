@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface FinanceService {
     Finance newFinance(Finance finance);
+    Finance editFinanceById(Finance finance);
     void deleteFinanceById(int id);
 
     List<Finance> listAll();
