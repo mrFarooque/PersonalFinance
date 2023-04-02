@@ -15,6 +15,9 @@
       href="https://fonts.googleapis.com/css2?family=Tilt+Neon&display=swap"
       rel="stylesheet"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fasthand&family=Tilt+Neon&display=swap" rel="stylesheet">
     <!-- css file-->
     <link rel="stylesheet" href="style.css" />
     <title>Personal Finance</title>
@@ -24,13 +27,17 @@
     <nav class="navbar navbar-light">
       <span class="navbar-brand mb-0 h1">Financify</span>
       <button id="toggle-btn"></button>
+      <button id="logout">Exit <i class="fa-solid fa-right-from-bracket"></i> </button>
+      <p id="username">user</p>
     </nav>
     <div class="container-fluid">
       <div class="row">
         <div id="data-chart" class="col col-9 middle">
           <div class="row">
             <div class="col balance">
-              <p id="balance-ptag" class="positive-balance-bgcolor">Balance: ₹ <strong><span id="balance-data">0</span></strong></p>
+              <p id="balance-ptag" class="positive-balance-bgcolor">
+                Balance: ₹ <strong><span id="balance-data">0</span></strong>
+              </p>
             </div>
           </div>
           <div id="category" class="row">
@@ -77,7 +84,7 @@
               <option value="EXPENSE">Expense</option>
               <option value="INCOME">Income</option>
             </select>
-             Table for
+            Table for
             <select name="month" id="month">
               <option value="current" selected>Current month</option>
               <option value="01">January</option>
@@ -112,12 +119,7 @@
         <div id="toggle" class="col col-3 hide-form">
           <form>
             <p>Add Expense/Cash</p>
-            <input
-                type="hidden"
-                class="form-control"
-                id="id"
-                required
-              />
+            <input type="hidden" class="form-control" id="id" required />
             <div class="form-group">
               <label for="Amount">Amount</label>
               <input
