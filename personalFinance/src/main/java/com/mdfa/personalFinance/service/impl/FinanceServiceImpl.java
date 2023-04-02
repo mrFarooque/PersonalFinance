@@ -2,12 +2,14 @@ package com.mdfa.personalFinance.service.impl;
 
 import com.mdfa.personalFinance.enums.Category;
 import com.mdfa.personalFinance.enums.Type;
+import com.mdfa.personalFinance.helper.JwtUtil;
 import com.mdfa.personalFinance.models.Finance;
+import com.mdfa.personalFinance.models.User;
 import com.mdfa.personalFinance.repository.FinanceRepo;
+import com.mdfa.personalFinance.repository.UserRepo;
 import com.mdfa.personalFinance.service.FinanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -15,10 +17,17 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class FinanceServiceImpl implements FinanceService {
 
     @Autowired
-    FinanceRepo financeRepo;
+    private FinanceRepo financeRepo;
+    @Autowired
+    private UserRepo userRepo;
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @Override
     public Finance newFinance(Finance finance) {
+        String username = jwtUtil.extractUsername(jwtUtil.getTokenFormRequestContext());
+        User user = userRepo.findByUsername(username);
+        finance.setUser(user);
         return financeRepo.save(finance);
     }
 
@@ -39,22 +48,22 @@ public class FinanceServiceImpl implements FinanceService {
 
     @Override
     public List<Finance> listAllByType(Type type) {
-        return financeRepo.findAllByType(type);
+        return financeRepo.findAllByType(type, getUserFromContext());
     }
 
     @Override
     public List<Finance> listAllByMonth(int month) {
-        return financeRepo.findAllByMonth(month);
+        return financeRepo.findAllByMonth(month, getUserFromContext());
     }
 
     @Override
     public List<Finance> listTypeByMonth(Type type, int month) {
-        return financeRepo.findAllByMonthAndType(month, type);
+        return financeRepo.findAllByMonthAndType(month, type, getUserFromContext());
     }
 
     @Override
     public int totalByType(Type type) {
-        List<Finance> finances = financeRepo.findAllByType(type);
+        List<Finance> finances = financeRepo.findAllByType(type , getUserFromContext());
         AtomicInteger total = new AtomicInteger();
         finances.forEach(finance -> total.addAndGet(finance.getAmount()));
         return total.get();
@@ -62,7 +71,7 @@ public class FinanceServiceImpl implements FinanceService {
 
     @Override
     public int totalByTypeAndCategory(Type type, Category category) {
-        List<Finance> finances = financeRepo.findAllByTypeAndCategory(type, category);
+        List<Finance> finances = financeRepo.findAllByTypeAndCategory(type, category, getUserFromContext());
         AtomicInteger total = new AtomicInteger();
         finances.forEach(finance -> total.addAndGet(finance.getAmount()));
         return total.get();
@@ -70,7 +79,7 @@ public class FinanceServiceImpl implements FinanceService {
 
     @Override
     public int totalByCategoryAndMonth(Category category, int month) {
-        List<Finance> finances = financeRepo.findAllByCategoryAndMonth(category, month);
+        List<Finance> finances = financeRepo.findAllByCategoryAndMonth(category, month, getUserFromContext());
         AtomicInteger total = new AtomicInteger();
         finances.forEach(finance -> total.addAndGet(finance.getAmount()));
         return total.get();
@@ -78,7 +87,7 @@ public class FinanceServiceImpl implements FinanceService {
 
     @Override
     public int totalByTypeAndMonth(Type type, int month) {
-        List<Finance> finances = financeRepo.findAllByMonthAndType(month, type);
+        List<Finance> finances = financeRepo.findAllByMonthAndType(month, type, getUserFromContext());
         AtomicInteger total = new AtomicInteger();
         finances.forEach(finance -> total.addAndGet(finance.getAmount()));
         return total.get();
@@ -86,7 +95,7 @@ public class FinanceServiceImpl implements FinanceService {
 
     @Override
     public int totalByTypeAndCategoryAndMonth(Type type, Category category, int month) {
-        List<Finance> finances = financeRepo.findAllByTypeAndCategoryAndMonth(type, category, month);
+        List<Finance> finances = financeRepo.findAllByTypeAndCategoryAndMonth(type, category, month, getUserFromContext());
         AtomicInteger total = new AtomicInteger();
         finances.forEach(finance -> total.addAndGet(finance.getAmount()));
         return total.get();
@@ -95,5 +104,10 @@ public class FinanceServiceImpl implements FinanceService {
     @Override
     public int balanceByMonth(int month) {
         return totalByTypeAndMonth(Type.INCOME, month) - totalByTypeAndMonth(Type.EXPENSE, month);
+    }
+
+    private User getUserFromContext() {
+        String username = jwtUtil.extractUsername(jwtUtil.getTokenFormRequestContext());
+        return userRepo.findByUsername(username);
     }
 }

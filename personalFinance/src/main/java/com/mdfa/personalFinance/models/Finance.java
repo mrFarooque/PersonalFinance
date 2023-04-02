@@ -23,4 +23,6 @@ public class Finance {
     @Enumerated
     private Category category;
     private Type type;
+    @ManyToOne
+    private User user;
 }
